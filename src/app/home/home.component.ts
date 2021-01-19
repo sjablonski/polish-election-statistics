@@ -1,8 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import * as Chart from 'chart.js';
-import { ChernoffShape } from '../ChernoffShape';
-import { Candidates, Statistics } from '../statistics';
-import { StatisticsService } from '../statistics.service';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import * as Chart from "chart.js";
+import { ChernoffShape } from "../ChernoffShape";
+import { Candidates, Statistics } from "../statistics";
+import { StatisticsService } from "../statistics.service";
+import { Map } from "../map.interface";
 
 interface Datasets {
   label: string;
@@ -10,21 +11,16 @@ interface Datasets {
   backgroundColor: string;
 }
 
-interface Map {
-  voivodeship: string;
-  candidates: Candidates[];
-}
-
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
   mapData: Map[];
   tableData: Statistics[];
-  totalData: {};
-  describeStats: {};
+  totalData: Statistics;
+  describeStats: { [key: string]: any };
   chernoffData: ChernoffShape[];
   tab: string;
   tab2: string;
@@ -32,14 +28,14 @@ export class HomeComponent implements OnInit {
   constructor(private statisticsService: StatisticsService) {
     this.mapData = [];
     this.tableData = [];
-    this.totalData = {};
+    this.totalData = {} as Statistics;
     this.describeStats = {};
     this.chernoffData = [];
-    this.tab = 'map';
-    this.tab2 = 'table';
+    this.tab = "map";
+    this.tab2 = "table";
   }
 
-  @ViewChild('myChart') set content(content: ElementRef) {
+  @ViewChild("myChart") set content(content: ElementRef) {
     if (content) {
       const labels: string[] = [];
       const datasets: Datasets[] = [];
@@ -47,24 +43,24 @@ export class HomeComponent implements OnInit {
         labels.push(data.voivodeship);
         data.candidates.forEach((c: Candidates) => {
           const found = datasets.find(
-            (el) => el.label === c.name.surname + ' ' + c.name.forename
+            (el) => el.label === c.name.surname + " " + c.name.forename
           );
           const percent = Math.ceil(c.percent * 10000) / 100;
           if (found) {
             found.data.push(percent);
           } else {
             datasets.push({
-              label: c.name.surname + ' ' + c.name.forename,
+              label: c.name.surname + " " + c.name.forename,
               data: [percent],
               backgroundColor:
-                c.type === 0 ? 'rgb(87, 159, 245)' : 'rgb(252, 169, 79)',
+                c.type === 0 ? "rgb(87, 159, 245)" : "rgb(252, 169, 79)",
             });
           }
         });
       });
 
       new Chart(content.nativeElement, {
-        type: 'horizontalBar',
+        type: "horizontalBar",
         data: {
           labels,
           datasets,
@@ -82,7 +78,7 @@ export class HomeComponent implements OnInit {
     });
     this.statisticsService
       .getDescriptiveStatistics()
-      .subscribe((statistics) => {
+      .subscribe((statistics: any) => {
         this.describeStats = statistics;
       });
     this.statisticsService.getChernoffData().subscribe((statistics) => {
@@ -119,7 +115,7 @@ export class HomeComponent implements OnInit {
         return prev;
       },
       {
-        voivodeship: '',
+        voivodeship: "",
         entitledVote: 0,
         issuedBallots: 0,
         correspondenceVotes: 0,

@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { DescriptiveStatistics } from './DescriptiveStatistics';
-import { VoivodeshipPipe } from './voivodeship.pipe';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable, of } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+import { DescriptiveStatistics } from "./DescriptiveStatistics";
+import { VoivodeshipPipe } from "./voivodeship.pipe";
 
-import { Statistics } from './statistics';
-import { ArrayUtils } from './array-utils';
+import { Candidates, Statistics } from "./statistics";
+import { ArrayUtils } from "./array-utils";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class StatisticsService {
-  private readonly statisticsUrl = 'api/statistics';
+  private readonly statisticsUrl = "api/statistics";
 
   constructor(
     private http: HttpClient,
@@ -27,7 +27,7 @@ export class StatisticsService {
 
   getStatistic(voivodeshipId: string) {
     return this.http
-      .get<Statistics[]>(this.statisticsUrl + '?voivodeship=' + voivodeshipId)
+      .get<Statistics[]>(this.statisticsUrl + "?voivodeship=" + voivodeshipId)
       .pipe(catchError(this.handleError<Statistics[]>([])));
   }
 
@@ -50,7 +50,9 @@ export class StatisticsService {
 
   getChernoffDataById(voivodeshipId: string) {
     return this.getChernoffData().pipe(
-      map((data) => data.find((el) => el.voivodeship === voivodeshipId)),
+      map((data) =>
+        data.find((el: Statistics) => el.voivodeship === voivodeshipId)
+      ),
       catchError(this.handleError<Statistics[]>([]))
     );
   }
@@ -69,7 +71,7 @@ export class StatisticsService {
     const describeStats = this.generateDescriptiveStatistics(mergedStats);
     const { candidates, ...otherDescribeStats } = this.keySwap(describeStats);
 
-    candidates.forEach((el) => {
+    candidates.forEach((el: { [key: string]: any }) => {
       Object.entries(otherDescribeStats).forEach(([k, v]) => {
         (v.candidates = v.candidates || []).push(el[k]);
       });
@@ -78,18 +80,18 @@ export class StatisticsService {
     return otherDescribeStats;
   }
 
-  fillChernoffData(stats: Statistics[], describeStats) {
-    const normalizeArr = {
-      correspondenceVotes: { shape: 'brow', value: [-1, 1] },
-      entitledVote: { shape: 'face', value: [0, 1] },
-      issuedBallots: { shape: 'hair', value: [-1, 1] },
-      totalValidVotes: { shape: 'mouth', value: [-1, 1] },
-      percent_0: { shape: 'noseh', value: [0, 1] },
-      percent_1: { shape: 'nosew', value: [0, 1] },
-      votes_0: { shape: 'eyeh', value: [0, 1] },
-      votes_1: { shape: 'eyew', value: [0, 1] },
-      type_0: { shape: 'type_0', value: [0, 0] },
-      type_1: { shape: 'type_1', value: [0, 0] },
+  fillChernoffData(stats: Statistics[], describeStats: any) {
+    const normalizeArr: { [key: string]: any } = {
+      correspondenceVotes: { shape: "brow", value: [-1, 1] },
+      entitledVote: { shape: "face", value: [0, 1] },
+      issuedBallots: { shape: "hair", value: [-1, 1] },
+      totalValidVotes: { shape: "mouth", value: [-1, 1] },
+      percent_0: { shape: "noseh", value: [0, 1] },
+      percent_1: { shape: "nosew", value: [0, 1] },
+      votes_0: { shape: "eyeh", value: [0, 1] },
+      votes_1: { shape: "eyew", value: [0, 1] },
+      type_0: { shape: "type_0", value: [0, 0] },
+      type_1: { shape: "type_1", value: [0, 0] },
     };
 
     let { min, max } = describeStats;
@@ -101,26 +103,29 @@ export class StatisticsService {
         ...statistic,
         ...ArrayUtils.flattenObject(statistic.candidates),
       }))
-      .reduce((prev, curr) => {
+      .reduce((prev: any, curr) => {
         return [
           ...prev,
-          Object.entries(curr).reduce((prev2, [k, v]) => {
-            if (!!Number(v)) {
-              const index = normalizeArr[k].shape;
-              prev2[index] = DescriptiveStatistics.normalize(
-                min[k],
-                max[k],
-                v,
-                normalizeArr[k].value
-              );
-            } else if (k === 'voivodeship') {
-              prev2['label'] = this.voivodeshipPipe.transform(v);
-              prev2[k] = v;
-            } else {
-              prev2[k] = v;
-            }
-            return prev2;
-          }, {}),
+          Object.entries(curr).reduce(
+            (prev2: { [key: string]: any }, [k, v]) => {
+              if (typeof v === "number") {
+                const index = normalizeArr[k].shape;
+                prev2[index] = DescriptiveStatistics.normalize(
+                  min[k],
+                  max[k],
+                  v,
+                  normalizeArr[k].value
+                );
+              } else if (k === "voivodeship" && typeof v === "string") {
+                prev2["label"] = this.voivodeshipPipe.transform(v);
+                prev2[k] = v;
+              } else {
+                prev2[k] = v;
+              }
+              return prev2;
+            },
+            {}
+          ),
         ];
       }, []);
     return normalize;
@@ -149,7 +154,7 @@ export class StatisticsService {
     return Object.entries(obj).reduce(
       (prev: { [key: string]: any }, [k, v]) => {
         if (Array.isArray(v)) {
-          if (v.every((el) => typeof el === 'number')) {
+          if (v.every((el) => typeof el === "number")) {
             prev[k] = DescriptiveStatistics.getAll(v);
           } else if (v.every((el) => el === Object(el))) {
             prev[k] = v.map((value) => ({

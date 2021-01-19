@@ -1,3 +1,16 @@
+interface DescriptiveStatisticsAll {
+  min: number;
+  max: number;
+  range: number;
+  midrange: number;
+  sum: number;
+  mean: number;
+  median: number;
+  variance: number;
+  standardDeviation: number;
+  meanAbsoluteDeviation: number;
+}
+
 export class DescriptiveStatistics {
   static min(array: number[]) {
     return Math.min(...array);
@@ -67,7 +80,7 @@ export class DescriptiveStatistics {
     );
   }
 
-  static getAll(array: number[]) {
+  static getAll(array: number[]): DescriptiveStatisticsAll {
     return {
       min: this.min(array),
       max: this.max(array),

@@ -7,17 +7,17 @@ import {
   Injector,
   ComponentRef,
   OnDestroy,
-} from '@angular/core';
-import { Statistics } from './statistics';
-import { TooltipComponent } from './tooltip/tooltip.component';
+} from "@angular/core";
+import { Map } from "./map.interface";
+import { TooltipComponent } from "./tooltip/tooltip.component";
 
 @Directive({
-  selector: '[appTooltip]',
+  selector: "[appTooltip]",
 })
 export class TooltipDirective implements OnDestroy {
   private tooltipRef: HTMLElement | null;
   private tooltipComponentRef: ComponentRef<TooltipComponent> | null;
-  @Input('appTooltip') tooltipData: Statistics;
+  @Input("appTooltip") tooltipData: Map;
 
   constructor(
     private injector: Injector,
@@ -26,16 +26,16 @@ export class TooltipDirective implements OnDestroy {
   ) {
     this.tooltipRef = null;
     this.tooltipComponentRef = null;
-    this.tooltipData = {} as Statistics;
+    this.tooltipData = {} as Map;
   }
 
   ngOnDestroy() {
     this.clear();
   }
 
-  @HostListener('mouseenter')
+  @HostListener("mouseenter")
   show() {
-    this.tooltipRef = document.createElement('app-tooltip');
+    this.tooltipRef = document.createElement("app-tooltip");
     const factory = this.componentFactoryResolver.resolveComponentFactory(
       TooltipComponent
     );
@@ -50,17 +50,17 @@ export class TooltipDirective implements OnDestroy {
     document.body.appendChild(this.tooltipRef);
   }
 
-  @HostListener('mousemove', ['$event'])
+  @HostListener("mousemove", ["$event"])
   update(ev: MouseEvent) {
     if (this.tooltipRef) {
       this.tooltipRef.style.top =
-        ev.pageY - this.tooltipRef.offsetHeight - 20 + 'px';
+        ev.pageY - this.tooltipRef.offsetHeight - 20 + "px";
       this.tooltipRef.style.left =
-        ev.pageX - this.tooltipRef.offsetWidth / 2 + 'px';
+        ev.pageX - this.tooltipRef.offsetWidth / 2 + "px";
     }
   }
 
-  @HostListener('mouseleave')
+  @HostListener("mouseleave")
   hide() {
     this.clear();
   }

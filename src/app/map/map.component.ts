@@ -1,24 +1,27 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { polandPathsSVG, PathSVG } from '../path-svg';
+import { Component, Input, OnChanges } from "@angular/core";
+import { polandPathsSVG } from "../path-svg";
+import { Candidates } from "../statistics";
+import { Map } from "../map.interface";
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
+  selector: "app-map",
+  templateUrl: "./map.component.html",
+  styleUrls: ["./map.component.scss"],
 })
 export class MapComponent implements OnChanges {
   pathsSVG;
-  candidates;
-  @Input() data: [];
+  candidates: Candidates[];
+  @Input() data: Map[];
 
   constructor() {
     this.pathsSVG = polandPathsSVG;
     this.data = [];
+    this.candidates = [];
   }
 
   change() {
-    const max = this.data.map((d) =>
-      d.candidates.reduce((prev, curr) => {
+    const max = this.data.map((d: any) =>
+      d.candidates.reduce((prev: any, curr: any) => {
         const win = prev.votes > curr.votes ? prev : curr;
         return {
           voivodeship: d.voivodeship,
@@ -38,9 +41,10 @@ export class MapComponent implements OnChanges {
         )
       );
     }
+
     this.pathsSVG = merged;
-    this.candidates = this.data.reduce((prev, curr) => {
-      curr.candidates.forEach((c) => {
+    this.candidates = this.data.reduce((prev: Candidates[], curr: Map) => {
+      curr.candidates.forEach((c: Candidates) => {
         if (!prev.some((x) => x.type === c.type)) {
           prev.push(c);
         }
@@ -49,8 +53,8 @@ export class MapComponent implements OnChanges {
     }, []);
   }
 
-  getTooltipData(voivodeship) {
-    return this.data.filter((d) => d.voivodeship === voivodeship)[0];
+  getTooltipData(voivodeship: string) {
+    return this.data.filter((d: Map) => d.voivodeship === voivodeship)[0];
   }
 
   ngOnChanges() {
