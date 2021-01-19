@@ -23,6 +23,7 @@ import {
 } from "./components/nav-tabs/nav-tabs.component";
 import { DescriptiveStatisticsPipe } from "./pipes/descriptive-statistics.pipe";
 import { ChernoffFaceComponent } from "./components/chernoff-face/chernoff-face.component";
+import { ChernoffLegendComponent } from './components/chernoff-legend/chernoff-legend.component';
 
 registerLocaleData(localePl);
 
@@ -42,6 +43,7 @@ registerLocaleData(localePl);
     NavTabComponent,
     DescriptiveStatisticsPipe,
     ChernoffFaceComponent,
+    ChernoffLegendComponent,
   ],
   imports: [
     BrowserModule,

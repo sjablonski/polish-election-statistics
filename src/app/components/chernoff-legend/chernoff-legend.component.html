@@ -1,0 +1,13 @@
+<button class="toggle-btn" (click)="isVisabled = !isVisabled">
+  {{ isVisabled ? "Ukryj" : "Pokaż" }} legendę Chernoffa
+</button>
+<div *ngIf="isVisabled" class="chernoff-legend">
+  <p><b>Brew</b> - Głosy korespondencyjne</p>
+  <p><b>Twarz</b> - Uprawnionych do głosowania</p>
+  <p><b>Włosy</b> - Wydane karty do głosowania</p>
+  <p><b>Usta</b> - Ważnych głosów</p>
+  <p><b>Wysokość nosa</b> - Procent na Andrzeja Dudę</p>
+  <p><b>Szerokość nosa</b> - Procent na Rafała Trzaskowskiego</p>
+  <p><b>Wysokość oczu</b> - Głosów na Andrzeja Dudę</p>
+  <p><b>Szerokość oczu</b> - Głosów na Rafała Trzaskowskiego</p>
+</div>

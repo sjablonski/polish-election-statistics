@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+.toggle-btn {
+  display: block;
+  margin: 12px auto;
+  padding: 8px 16px;
+  background-color: white;
+  border: 2px solid #4caf50;
+  font-size: 12px;
+  color: #000000;
+  cursor: pointer;
+  outline: none;
+  transition-duration: 0.4s;
+}
+
+.toggle-btn:hover {
+  background-color: #4caf50;
+  color: white;
+}
+
+.chernoff-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row-gap: 10px;
+}

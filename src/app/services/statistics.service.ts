@@ -89,8 +89,8 @@ export class StatisticsService {
       percent_1: { shape: "nosew", value: [0, 1] },
       votes_0: { shape: "eyeh", value: [0, 1] },
       votes_1: { shape: "eyew", value: [0, 1] },
-      type_0: { shape: "type_0", value: [0, 0] },
-      type_1: { shape: "type_1", value: [0, 0] },
+      type_0: { shape: "type_0", value: [0, 0] }, // unused
+      type_1: { shape: "type_1", value: [0, 0] }, // unused
     };
 
     let { min, max } = describeStats;

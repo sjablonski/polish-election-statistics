@@ -5,6 +5,7 @@
         <app-nav-tabs>
           <app-nav-tab title="Mapa">
             <app-map [data]="mapData" [chernoffData]="chernoffData"></app-map>
+            <app-chernoff-legend></app-chernoff-legend>
           </app-nav-tab>
           <app-nav-tab title="Twarze Chernoffa">
             <app-chernoff-face
@@ -13,6 +14,7 @@
               #chernoffFace
               [data]="chernoffData"
             ></app-chernoff-face>
+            <app-chernoff-legend></app-chernoff-legend>
           </app-nav-tab>
         </app-nav-tabs>
       </div>
