@@ -1,0 +1,32 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  class="map"
+  baseprofile="tiny"
+  fill="#7c7c7c"
+  stroke="#ffffff"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  version="1.2"
+  viewBox="0 0 1000 950"
+>
+  <path
+    *ngFor="let path of pathsSVG"
+    [id]="path.id"
+    class="map-voivodeship type-{{ path.type }}-{{ path.percent }}-percent"
+    [attr.name]="path.name"
+    [attr.d]="path.d"
+    [routerLink]="['/details', path.id]"
+    appDOMStackOrder
+    [appTooltip]="getTooltipData(path.id)"
+  />
+</svg>
+<div class="map-legend">
+  <div *ngFor="let c of candidates" class="squares">
+    <span
+      *ngFor="let s of [50, 55, 60, 65, 70, 75, 80]"
+      class="square type-{{ c.type }}-{{ s }}-percent"
+    ></span>
+    <span class="squares-label">{{ c.name.surname }}</span>
+  </div>
+</div>

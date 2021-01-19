@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <canvas id="myChart" width="400" height="400"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <app-chernoff-face
+          *ngIf="chernoffData.length"
+          id="face"
+          [data]="chernoffData"
+        ></app-chernoff-face>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2">Liczba uprawnionych</th>
+              <th rowspan="2">Liczba kart wydanych</th>
+              <th rowspan="2">
+                Liczba kart wyjętych z kopert na kartę do głosowania
+              </th>
+              <th rowspan="2">Liczba głosów ważnych</th>
+              <th *ngFor="let c of statistic.candidates" colspan="2">
+                {{ c.name.surname }} {{ c.name.forename }}
+              </th>
+            </tr>
+            <tr>
+              <ng-container *ngFor="let c of statistic.candidates">
+                <th>Liczba głosów</th>
+                <th>Procent głosów</th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ statistic.entitledVote | number }}</td>
+              <td>{{ statistic.issuedBallots | number }}</td>
+              <td>{{ statistic.correspondenceVotes | number }}</td>
+              <td>{{ statistic.totalValidVotes | number }}</td>
+              <ng-container *ngFor="let c of statistic.candidates">
+                <td>{{ c.votes | number }}</td>
+                <td>{{ c.percent | percent: "2.2" }}</td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

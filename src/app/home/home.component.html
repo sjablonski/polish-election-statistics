@@ -1,0 +1,151 @@
+<div class="wrapper">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          <ul class="nav-tabs">
+            <li
+              class="nav-item"
+              [class.active]="tab === 'map'"
+              (click)="selectTab('map')"
+            >
+              Mapa
+            </li>
+            <li
+              class="nav-item"
+              [class.active]="tab === 'chernoffFace'"
+              (click)="selectTab('chernoffFace')"
+            >
+              Twarze Chernoffa
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <app-map *ngIf="tab === 'map'" [data]="mapData"></app-map>
+          <app-chernoff-face
+            *ngIf="tab === 'chernoffFace'"
+            id="face"
+            #chernoffFace
+            [data]="chernoffData"
+          ></app-chernoff-face>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          <ul class="nav-tabs">
+            <li
+              class="nav-item"
+              [class.active]="tab2 === 'table'"
+              (click)="selectTab2('table')"
+            >
+              Tabela
+            </li>
+            <li
+              class="nav-item"
+              [class.active]="tab2 === 'chart'"
+              (click)="selectTab2('chart')"
+            >
+              Wykres
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <app-table *ngIf="tab2 === 'table'" [data]="tableData"></app-table>
+          <canvas
+            *ngIf="tab2 === 'chart'"
+            id="myChart"
+            #myChart
+            width="400"
+            height="400"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <table>
+            <thead>
+              <tr>
+                <th rowspan="2">Liczba uprawnionych</th>
+                <th rowspan="2">Liczba kart wydanych</th>
+                <th rowspan="2">
+                  Liczba kart wyjętych z kopert na kartę do głosowania
+                </th>
+                <th rowspan="2">Liczba głosów ważnych</th>
+                <th *ngFor="let c of totalData.candidates" colspan="2">
+                  {{ c.name.surname }} {{ c.name.forename }}
+                </th>
+              </tr>
+              <tr>
+                <ng-container *ngFor="let c of totalData.candidates">
+                  <th>Liczba głosów</th>
+                  <th>Procent głosów</th>
+                </ng-container>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ totalData.entitledVote | number }}</td>
+                <td>{{ totalData.issuedBallots | number }}</td>
+                <td>{{ totalData.correspondenceVotes | number }}</td>
+                <td>{{ totalData.totalValidVotes | number }}</td>
+                <ng-container *ngFor="let c of totalData.candidates">
+                  <td>{{ c.votes | number }}</td>
+                  <td>{{ c.percent | percent: "2.2" }}</td>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2">#</th>
+              <th rowspan="2">Liczba uprawnionych</th>
+              <th rowspan="2">Liczba kart wydanych</th>
+              <th rowspan="2">
+                Liczba kart wyjętych z kopert na kartę do głosowania
+              </th>
+              <th rowspan="2">Liczba głosów ważnych</th>
+              <th *ngFor="let c of totalData.candidates" colspan="1">
+                {{ c.name.surname }} {{ c.name.forename }}
+              </th>
+            </tr>
+            <tr>
+              <ng-container *ngFor="let c of totalData.candidates">
+                <th>Liczba głosów</th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of describeStats | keyvalue">
+              <td>{{ item.key | descriptiveStatistics }}</td>
+              <td>{{ item.value.entitledVote | number }}</td>
+              <td>{{ item.value.issuedBallots | number }}</td>
+              <td>{{ item.value.correspondenceVotes | number }}</td>
+              <td>{{ item.value.totalValidVotes | number }}</td>
+              <ng-container *ngFor="let i of item.value.candidates">
+                <td>{{ i.votes | number }}</td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

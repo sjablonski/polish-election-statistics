@@ -1,0 +1,63 @@
+@import "variables";
+
+%triangle {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 9px;
+  border-color: rgba(0, 0, 0, 0.2) transparent transparent transparent;
+}
+
+:host {
+  pointer-events: none;
+  position: absolute;
+  background-color: #ffffff;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  max-width: 450px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  cursor: default;
+  &::before {
+    @extend %triangle;
+  }
+  &::after {
+    @extend %triangle;
+    border-width: 8px;
+    border-color: #ffffff transparent transparent transparent;
+  }
+}
+
+.map-tooltip {
+  line-height: 20px;
+}
+
+.map-tooltip-title {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  text-transform: capitalize;
+}
+
+.candidate-square {
+  display: inline-block;
+  margin-right: 5px;
+  height: 10px;
+  width: 10px;
+}
+
+.candidate-square.type-0 {
+  background-color: map-get($firstColors, 4);
+}
+
+.candidate-square.type-1 {
+  background-color: map-get($secondColors, 4);
+}
+
+.candidate-text-bold {
+  font-weight: bold;
+}

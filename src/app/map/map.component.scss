@@ -1,0 +1,75 @@
+@import "variables";
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.map {
+  display: block;
+  margin: 0 auto;
+}
+
+.map-voivodeship {
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    cursor: pointer;
+    stroke: rgb(0, 0, 0);
+    stroke-width: 2px;
+  }
+}
+
+@each $i, $color in $firstColors {
+  $value: 50 + (5 * $i);
+  .type-0-#{$value}-percent {
+    fill: $color;
+    background-color: $color;
+  }
+}
+
+@each $i, $color in $secondColors {
+  $value: 50 + (5 * $i);
+  .type-1-#{$value}-percent {
+    fill: $color;
+    background-color: $color;
+  }
+}
+
+.squares > * {
+  vertical-align: middle;
+}
+
+.square {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  margin: 2px 2px;
+  position: relative;
+
+  @for $i from 1 through 6 {
+    $value: 50 + (5 * $i);
+    .squares:first-child > &:nth-of-type(#{$i})::after {
+      content: "#{$value}";
+      position: absolute;
+      top: -24px;
+      right: -8px;
+      font-weight: 600;
+    }
+  }
+}
+
+.squares-label {
+  display: inline;
+  margin: 8px;
+  font-size: 20px;
+  font-weight: 600;
+
+  .squares:nth-child(1) > & {
+    color: map-get($firstColors, 4);
+  }
+  .squares:nth-child(2) > & {
+    color: map-get($secondColors, 4);
+  }
+}

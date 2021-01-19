@@ -1,0 +1,35 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th rowspan="2" scope="col">Województwo</th>
+        <th *ngFor="let c of candidates" colspan="2" scope="col">
+          {{ c.name.surname }}
+          {{ c.name.forename }}
+        </th>
+        <th rowspan="2" scope="col">Razem</th>
+      </tr>
+      <tr>
+        <ng-container *ngFor="let c of candidates">
+          <th scope="col">Liczba głosów</th>
+          <th scope="col">Procent głosów</th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of data" [routerLink]="['/details', s.voivodeship]">
+        <td scope="row">{{ s.voivodeship | voivodeship }}</td>
+        <ng-container *ngFor="let c of s.candidates">
+          <td>{{ c.votes | number }}</td>
+          <td>
+            <app-progress-bar
+              [value]="c.percent"
+              [color]="c.type === 0 ? '#579ff5' : '#fca94f'"
+            ></app-progress-bar>
+          </td>
+        </ng-container>
+        <td>{{ s.totalValidVotes | number }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

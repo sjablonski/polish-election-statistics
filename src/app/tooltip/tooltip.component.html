@@ -1,0 +1,15 @@
+<div *ngIf="tooltip" class="map-tooltip">
+  <h1 class="map-tooltip-title">
+    {{ tooltip.voivodeship | voivodeship }}
+  </h1>
+  <div *ngFor="let candidate of tooltip.candidates">
+    <span class="candidate-square type-{{ candidate.type }}"></span>
+    <span class="candidate-text"
+      >{{ candidate.name.surname }} {{ candidate.name.forename }} -
+      <b class="candidate-text-bold">{{
+        candidate.percent | percent: "2.2"
+      }}</b>
+      ({{ candidate.votes }})
+    </span>
+  </div>
+</div>

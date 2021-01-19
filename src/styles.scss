@@ -1,0 +1,75 @@
+html,
+body {
+  background-color: #f6f6f6;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Verdana, "san-serif";
+  font-size: 14px;
+  min-width: 550px;
+  max-width: 1400px;
+  margin: 0 auto;
+  line-height: 1;
+}
+
+.row {
+  padding: 15px 0;
+}
+
+.card {
+  background-color: #ffffff;
+  height: 100%;
+  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.16);
+
+  &-header {
+    padding: 4px 24px 0 24px;
+  }
+
+  &-body {
+    padding: 24px;
+  }
+}
+
+.nav-tabs {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  text-align: center;
+}
+
+.nav-item {
+  display: inline-block;
+  padding: 10px;
+  margin: 0 12px;
+  cursor: pointer;
+  &.active {
+    font-weight: 600;
+    color: green;
+    border-bottom: 3px solid green;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  // font-size: 12px;
+  font-weight: 700;
+  vertical-align: middle;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+th,
+td {
+  padding: 9px;
+}
+
+th:not(:last-of-type),
+td:not(:last-of-type) {
+  border-right: 1px solid rgba(0, 0, 0, 0.16);
+}
+
+tbody tr {
+  border-top: 1px solid rgba(0, 0, 0, 0.16);
+}
