@@ -2,11 +2,10 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { DescriptiveStatistics } from "./DescriptiveStatistics";
-import { VoivodeshipPipe } from "./voivodeship.pipe";
-
-import { Candidates, Statistics } from "./statistics";
-import { ArrayUtils } from "./array-utils";
+import { DescriptiveStatistics } from "../utils/DescriptiveStatistics";
+import { ArrayUtils } from "../utils/array-utils";
+import { VoivodeshipPipe } from "../pipes/voivodeship.pipe";
+import { Statistics } from "../interfaces/statistics";
 
 @Injectable({
   providedIn: "root",

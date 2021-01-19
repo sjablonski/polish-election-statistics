@@ -1,6 +1,17 @@
 @import "variables";
 
-%triangle {
+%triangle-bottom {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 9px;
+  border-color: transparent transparent rgba(0, 0, 0, 0.2) transparent;
+}
+
+%triangle-top {
   content: "";
   position: absolute;
   border-style: solid;
@@ -22,11 +33,25 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   font-size: 12px;
   cursor: default;
+}
+
+.tooltip-bottom {
   &::before {
-    @extend %triangle;
+    @extend %triangle-bottom;
   }
   &::after {
-    @extend %triangle;
+    @extend %triangle-bottom;
+    border-width: 8px;
+    border-color: transparent transparent #ffffff transparent;
+  }
+}
+
+.tooltip-top {
+  &::before {
+    @extend %triangle-top;
+  }
+  &::after {
+    @extend %triangle-top;
     border-width: 8px;
     border-color: #ffffff transparent transparent transparent;
   }

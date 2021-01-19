@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import * as Chart from 'chart.js';
-import { ChernoffShape } from '../ChernoffShape';
-import { Statistics } from '../statistics';
-import { StatisticsService } from '../statistics.service';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import * as Chart from "chart.js";
+import { ChernoffShape } from "../../interfaces/ChernoffShape";
+import { Statistics } from "../../interfaces/statistics";
+import { StatisticsService } from "../../services/statistics.service";
 
 @Component({
-  selector: 'app-details',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss'],
+  selector: "app-details",
+  templateUrl: "./details.component.html",
+  styleUrls: ["./details.component.scss"],
 })
 export class DetailsComponent implements OnInit {
   statistic: Statistics;
@@ -25,30 +25,30 @@ export class DetailsComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       this.statisticsService
-        .getStatistic(params.get('voivodeshipId') || '')
+        .getStatistic(params.get("voivodeshipId") || "")
         .subscribe((statistic) => {
           this.statistic = statistic[0];
-          const ctx = document.getElementById('myChart') as HTMLCanvasElement;
+          const ctx = document.getElementById("myChart") as HTMLCanvasElement;
           new Chart(ctx, {
-            type: 'pie',
+            type: "pie",
             data: {
               labels: this.statistic.candidates.map(
                 (candidate) => candidate.name.surname
               ),
               datasets: [
                 {
-                  label: '# of Votes',
+                  label: "# of Votes",
                   data: this.statistic.candidates.map(
                     (candidate) => Math.ceil(candidate.percent * 10000) / 100
                   ),
-                  backgroundColor: ['rgb(87, 159, 245)', 'rgb(252, 169, 79)'],
+                  backgroundColor: ["rgb(87, 159, 245)", "rgb(252, 169, 79)"],
                 },
               ],
             },
           });
         });
       this.statisticsService
-        .getChernoffDataById(params.get('voivodeshipId') || '')
+        .getChernoffDataById(params.get("voivodeshipId") || "")
         .subscribe((statistic) => {
           this.chernoffData = [statistic];
         });

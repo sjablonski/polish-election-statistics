@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Candidates, Statistics } from "../statistics";
+import { Candidates, Statistics } from "../../interfaces/statistics";
 
 @Component({
   selector: "app-table",

@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from "@angular/core";
-import { polandPathsSVG } from "../path-svg";
-import { Candidates } from "../statistics";
-import { Map } from "../map.interface";
+import { polandPathsSVG } from "../../utils/path-svg";
+import { Candidates } from "../../interfaces/statistics";
+import { Map } from "../../interfaces/map.interface";
 
 @Component({
   selector: "app-map",
@@ -12,6 +12,7 @@ export class MapComponent implements OnChanges {
   pathsSVG;
   candidates: Candidates[];
   @Input() data: Map[];
+  @Input() chernoffData;
 
   constructor() {
     this.pathsSVG = polandPathsSVG;
@@ -54,7 +55,7 @@ export class MapComponent implements OnChanges {
   }
 
   getTooltipData(voivodeship: string) {
-    return this.data.filter((d: Map) => d.voivodeship === voivodeship)[0];
+    return this.chernoffData.filter((d) => d.voivodeship === voivodeship)[0];
   }
 
   ngOnChanges() {

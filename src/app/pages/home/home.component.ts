@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import * as Chart from "chart.js";
-import { ChernoffShape } from "../ChernoffShape";
-import { Candidates, Statistics } from "../statistics";
-import { StatisticsService } from "../statistics.service";
-import { Map } from "../map.interface";
+import { ChernoffShape } from "../../interfaces/ChernoffShape";
+import { Candidates, Statistics } from "../../interfaces/statistics";
+import { StatisticsService } from "../../services/statistics.service";
+import { Map } from "../../interfaces/map.interface";
 
 interface Datasets {
   label: string;
@@ -22,8 +22,6 @@ export class HomeComponent implements OnInit {
   totalData: Statistics;
   describeStats: { [key: string]: any };
   chernoffData: ChernoffShape[];
-  tab: string;
-  tab2: string;
 
   constructor(private statisticsService: StatisticsService) {
     this.mapData = [];
@@ -31,8 +29,6 @@ export class HomeComponent implements OnInit {
     this.totalData = {} as Statistics;
     this.describeStats = {};
     this.chernoffData = [];
-    this.tab = "map";
-    this.tab2 = "table";
   }
 
   @ViewChild("myChart") set content(content: ElementRef) {
@@ -128,13 +124,5 @@ export class HomeComponent implements OnInit {
       percent: candidate.votes / sum.totalValidVotes,
     }));
     this.totalData = sum;
-  }
-
-  selectTab(tab: string) {
-    this.tab = tab;
-  }
-
-  selectTab2(tab: string) {
-    this.tab2 = tab;
   }
 }

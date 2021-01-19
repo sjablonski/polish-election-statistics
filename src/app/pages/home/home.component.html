@@ -2,65 +2,31 @@
   <div class="row">
     <div class="col-lg-6">
       <div class="card">
-        <div class="card-header">
-          <ul class="nav-tabs">
-            <li
-              class="nav-item"
-              [class.active]="tab === 'map'"
-              (click)="selectTab('map')"
-            >
-              Mapa
-            </li>
-            <li
-              class="nav-item"
-              [class.active]="tab === 'chernoffFace'"
-              (click)="selectTab('chernoffFace')"
-            >
-              Twarze Chernoffa
-            </li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <app-map *ngIf="tab === 'map'" [data]="mapData"></app-map>
-          <app-chernoff-face
-            *ngIf="tab === 'chernoffFace'"
-            id="face"
-            #chernoffFace
-            [data]="chernoffData"
-          ></app-chernoff-face>
-        </div>
+        <app-nav-tabs>
+          <app-nav-tab title="Mapa">
+            <app-map [data]="mapData" [chernoffData]="chernoffData"></app-map>
+          </app-nav-tab>
+          <app-nav-tab title="Twarze Chernoffa">
+            <app-chernoff-face
+              *ngIf="chernoffData.length"
+              id="face"
+              #chernoffFace
+              [data]="chernoffData"
+            ></app-chernoff-face>
+          </app-nav-tab>
+        </app-nav-tabs>
       </div>
     </div>
     <div class="col-lg-6">
       <div class="card">
-        <div class="card-header">
-          <ul class="nav-tabs">
-            <li
-              class="nav-item"
-              [class.active]="tab2 === 'table'"
-              (click)="selectTab2('table')"
-            >
-              Tabela
-            </li>
-            <li
-              class="nav-item"
-              [class.active]="tab2 === 'chart'"
-              (click)="selectTab2('chart')"
-            >
-              Wykres
-            </li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <app-table *ngIf="tab2 === 'table'" [data]="tableData"></app-table>
-          <canvas
-            *ngIf="tab2 === 'chart'"
-            id="myChart"
-            #myChart
-            width="400"
-            height="400"
-          ></canvas>
-        </div>
+        <app-nav-tabs>
+          <app-nav-tab title="Tabela">
+            <app-table [data]="tableData"></app-table>
+          </app-nav-tab>
+          <app-nav-tab title="Wykres">
+            <canvas id="myChart" #myChart width="400" height="400"></canvas>
+          </app-nav-tab>
+        </app-nav-tabs>
       </div>
     </div>
   </div>

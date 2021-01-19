@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import * as d3 from 'd3';
-import { ChernoffShape } from '../ChernoffShape';
+import { Component, Input, OnInit } from "@angular/core";
+import * as d3 from "d3";
+import { ChernoffShape } from "../../interfaces/ChernoffShape";
 
-declare module 'd3' {
+declare module "d3" {
   function chernoff(): any;
   namespace layout {
     function grid(): any;
@@ -40,10 +40,10 @@ function d3_chernoff() {
     eyehf: any = 0.5,
     eyewf: any = 0.5,
     browf: any = 0,
-    label: any = '',
+    label: any = "",
     line = d3.svg
       .line<Dimension>()
-      .interpolate('cardinal-closed')
+      .interpolate("cardinal-closed")
       .x(function (d) {
         return d.x;
       })
@@ -52,7 +52,7 @@ function d3_chernoff() {
       }),
     bline = d3.svg
       .line<Dimension>()
-      .interpolate('basis-closed')
+      .interpolate("basis-closed")
       .x(function (d) {
         return d.x;
       })
@@ -70,14 +70,14 @@ function d3_chernoff() {
 
   function __chernoff(this: any, d: any) {
     const ele = d3.select(this),
-      facevar = (typeof facef === 'function' ? facef(d) : facef) * 30,
-      hairvar = (typeof hairf === 'function' ? hairf(d) : hairf) * 80,
-      mouthvar = (typeof mouthf === 'function' ? mouthf(d) : mouthf) * 7,
-      nosehvar = (typeof nosehf === 'function' ? nosehf(d) : nosehf) * 10,
-      nosewvar = (typeof nosewf === 'function' ? nosewf(d) : nosewf) * 10,
-      eyehvar = (typeof eyehf === 'function' ? eyehf(d) : eyehf) * 10,
-      eyewvar = (typeof eyewf === 'function' ? eyewf(d) : eyewf) * 10,
-      browvar = (typeof browf === 'function' ? browf(d) : browf) * 3;
+      facevar = (typeof facef === "function" ? facef(d) : facef) * 30,
+      hairvar = (typeof hairf === "function" ? hairf(d) : hairf) * 80,
+      mouthvar = (typeof mouthf === "function" ? mouthf(d) : mouthf) * 7,
+      nosehvar = (typeof nosehf === "function" ? nosehf(d) : nosehf) * 10,
+      nosewvar = (typeof nosewf === "function" ? nosewf(d) : nosewf) * 10,
+      eyehvar = (typeof eyehf === "function" ? eyehf(d) : eyehf) * 10,
+      eyewvar = (typeof eyewf === "function" ? eyewf(d) : eyewf) * 10,
+      browvar = (typeof browf === "function" ? browf(d) : browf) * 3;
 
     const face = [
       { x: 70, y: 60 },
@@ -89,12 +89,12 @@ function d3_chernoff() {
       { x: 20, y: 80 },
     ];
     ele
-      .selectAll('path.face')
+      .selectAll("path.face")
       .data([face])
       .enter()
-      .append('path')
-      .attr('class', 'face')
-      .attr('d', bline);
+      .append("path")
+      .attr("class", "face")
+      .attr("d", bline);
 
     var hair = [
       { x: 70, y: 60 },
@@ -107,12 +107,12 @@ function d3_chernoff() {
       { x: 20, y: 80 },
     ];
     ele
-      .selectAll('path.hair')
+      .selectAll("path.hair")
       .data([hair])
       .enter()
-      .append('path')
-      .attr('class', 'hair')
-      .attr('d', bline);
+      .append("path")
+      .attr("class", "hair")
+      .attr("d", bline);
 
     var mouth = [
       { x: 70, y: 130 + mouthvar },
@@ -121,12 +121,12 @@ function d3_chernoff() {
       { x: 30 + facevar, y: 135 - mouthvar },
     ];
     ele
-      .selectAll('path.mouth')
+      .selectAll("path.mouth")
       .data([mouth])
       .enter()
-      .append('path')
-      .attr('class', 'mouth')
-      .attr('d', line);
+      .append("path")
+      .attr("class", "mouth")
+      .attr("d", line);
 
     var nose = [
       { x: 70, y: 110 - nosehvar },
@@ -134,12 +134,12 @@ function d3_chernoff() {
       { x: 70 - nosewvar, y: 110 + nosehvar },
     ];
     ele
-      .selectAll('path.nose')
+      .selectAll("path.nose")
       .data([nose])
       .enter()
-      .append('path')
-      .attr('class', 'nose')
-      .attr('d', line);
+      .append("path")
+      .attr("class", "nose")
+      .attr("d", line);
 
     var leye = [
       { x: 55, y: 90 - eyehvar },
@@ -154,54 +154,54 @@ function d3_chernoff() {
       { x: 85 - eyewvar, y: 90 },
     ];
     ele
-      .selectAll('path.leye')
+      .selectAll("path.leye")
       .data([leye])
       .enter()
-      .append('path')
-      .attr('class', 'leye')
-      .attr('d', bline);
+      .append("path")
+      .attr("class", "leye")
+      .attr("d", bline);
     ele
-      .selectAll('path.reye')
+      .selectAll("path.reye")
       .data([reye])
       .enter()
-      .append('path')
-      .attr('class', 'reye')
-      .attr('d', bline);
+      .append("path")
+      .attr("class", "reye")
+      .attr("d", bline);
 
     ele
-      .append('path')
-      .attr('class', 'lbrow')
+      .append("path")
+      .attr("class", "lbrow")
       .attr(
-        'd',
-        'M' +
+        "d",
+        "M" +
           (55 - eyewvar / 1.7 - sign(browvar)) +
-          ',' +
+          "," +
           (87 - eyehvar + browvar) +
-          ' ' +
+          " " +
           (55 + eyewvar / 1.7 - sign(browvar)) +
-          ',' +
+          "," +
           (87 - eyehvar - browvar)
       );
     ele
-      .append('path')
-      .attr('class', 'rbrow')
+      .append("path")
+      .attr("class", "rbrow")
       .attr(
-        'd',
-        'M' +
+        "d",
+        "M" +
           (85 - eyewvar / 1.7 + sign(browvar)) +
-          ',' +
+          "," +
           (87 - eyehvar - browvar) +
-          ' ' +
+          " " +
           (85 + eyewvar / 1.7 + sign(browvar)) +
-          ',' +
+          "," +
           (87 - eyehvar + browvar)
       );
     ele
-      .append('text')
-      .attr('text-anchor', 'middle')
-      .attr('x', 70)
-      .attr('y', 175)
-      .attr('font-size', '16px')
+      .append("text")
+      .attr("text-anchor", "middle")
+      .attr("x", 70)
+      .attr("y", 175)
+      .attr("font-size", "16px")
       .text(label);
   }
 
@@ -375,12 +375,13 @@ function d3_chernoff() {
 };
 
 @Component({
-  selector: 'app-chernoff-face',
-  template: '',
+  selector: "app-chernoff-face",
+  template: "",
   styles: [],
 })
 export class ChernoffFaceComponent implements OnInit {
   @Input() data: ChernoffShape[];
+  @Input() id: string;
 
   constructor() {
     this.data = [];
@@ -417,35 +418,39 @@ export class ChernoffFaceComponent implements OnInit {
         return d.label;
       });
 
-    var width = '100%',
-      height = '100%';
+    const width = "100%",
+      height = "100%";
 
-    var rectGrid = d3.layout.grid().bands().size([360, 360]).padding([1.8, 2]);
+    const rectGrid = d3.layout
+      .grid()
+      .bands()
+      .size([360, 360])
+      .padding([1.8, 2]);
 
-    const viewBox = this.data.length === 1 ? '0 0 250 250' : '0 0 650 750';
+    const viewBox = this.data.length === 1 ? "0 0 250 250" : "0 0 650 750";
 
-    var svg = d3
-      .select('#face')
-      .append('svg:svg')
-      .attr('width', width)
-      .attr('height', height)
-      .attr('viewBox', viewBox);
+    const svg = d3
+      .select("#" + this.id)
+      .append("svg:svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewBox", viewBox);
 
     svg
-      .selectAll('g.chernoff')
+      .selectAll("g.chernoff")
       .data(rectGrid(this.data))
       .enter()
-      .append('g')
-      .attr('width', rectGrid.nodeSize()[0])
-      .attr('height', rectGrid.nodeSize()[1])
-      .attr('class', 'chernoff')
-      .attr('transform', (d: any) => {
+      .append("g")
+      .attr("width", rectGrid.nodeSize()[0])
+      .attr("height", rectGrid.nodeSize()[1])
+      .attr("class", "chernoff")
+      .attr("transform", (d: any) => {
         return (
-          'translate(' +
+          "translate(" +
           (d.x + (this.data.length === 1 ? 50 : 0)) +
-          ',' +
+          "," +
           (d.y + (this.data.length === 1 ? 25 : 0)) +
-          ')'
+          ")"
         );
       })
       .call(customCall);
