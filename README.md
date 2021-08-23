@@ -2,6 +2,19 @@
 
 Demo: https://polish-election-statistics.netlify.app/
 
+## Technology Stack:
+- Angular
+- Chart.js
+- D3.js
+
+The application shows statistics as:
+- Map of Poland with voivodeships
+- Chernoff Faces
+- Charts
+- Summary statistics
+
+## Installation
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.2.
 
 ## Development server
